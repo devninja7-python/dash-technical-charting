@@ -13,7 +13,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 from flask_caching import Cache
 
-
 # In[]:
 # Setup the app
 server = flask.Flask(__name__)
@@ -21,7 +20,6 @@ app = dash.Dash(__name__)
 
 app.scripts.config.serve_locally = False
 dcc._js_dist[0]['external_url'] = 'https://cdn.plot.ly/plotly-finance-1.28.0.min.js'
-
 
 # In[]:
 # Put your Dash code here
@@ -137,7 +135,8 @@ app.layout = html.Div(
         html.Div(
             [
                 html.Label('Specify parameters of technical indicators:'),
-                html.P('Use , to separate arguments and ; to separate indicators. () and spaces are ignored'),  # noqa: E501
+                html.P('Use , to separate arguments and ; to separate indicators. () and spaces are ignored'),
+                # noqa: E501
                 dcc.Input(
                     id='arglist',
                     style={'height': '32', 'width': '1020'}
@@ -157,6 +156,7 @@ app.layout = html.Div(
     }
 )
 
+
 @app.callback(Output('arg-controls', 'style'), [Input('multi', 'value')])
 def display_control(multi):
     if not multi:
@@ -170,14 +170,20 @@ def display_control(multi):
                                            Input('multi', 'value'),
                                            Input('arglist', 'value')])
 def update_graph_from_dropdown(dropdown, multi, arglist):
-
+    print('start')
     # Get Quantmod Chart
-    try:
-        df = web.DataReader(dropdown, 'google', dt.datetime(2016, 1, 1), dt.datetime.now())
-        print('Loading')
-        ch = qm.Chart(df)
-    except:
-        pass
+    df = web.DataReader(dropdown, 'yahoo', dt.datetime(2016, 1, 1), dt.datetime.now())
+    print('Loading')
+    ch = qm.Chart(df)
+    print(ch)
+
+    # try:
+    #     df = web.DataReader(dropdown, 'yahoo', dt.datetime(2016, 1, 1), dt.datetime.now())
+    #     print('Loading')
+    #     ch = qm.Chart(df)
+    #     print(ch)
+    # except:
+    #     pass
 
     # Get functions and arglist for technical indicators
     if arglist:
@@ -225,8 +231,8 @@ if 'DYNO' in os.environ:
         'external_url': 'https://cdn.rawgit.com/chriddyp/ca0d8f02a1659981a0ea7f013a378bbd/raw/e79f3f789517deec58f41251f7dbb6bee72c44ab/plotly_ga.js'
     })
 
-
 # In[]:
 # Run the Dash app
 if __name__ == '__main__':
-    app.server.run()
+    # print('start')
+    app.server.run(debug=True)

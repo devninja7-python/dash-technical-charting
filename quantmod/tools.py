@@ -15,7 +15,7 @@ from . import auth
 from . import utils
 from .auth import AUTH_DIR, FILE_CONTENT, CONFIG_FILE
 
-
+import chart_studio
 pyo = plotly.offline
 
 
@@ -245,6 +245,6 @@ def reset_config_file():
     ensure_local_files()
 
 
-set_credentials_file = plotly.tools.set_credentials_file
-get_credentials_file = plotly.tools.get_credentials_file
-reset_credentials_file = plotly.tools.reset_credentials_file
+set_credentials_file = chart_studio.tools.set_credentials_file
+get_credentials_file = chart_studio.tools.get_credentials_file
+reset_credentials_file = chart_studio.tools.reset_credentials_file
