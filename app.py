@@ -235,4 +235,4 @@ if 'DYNO' in os.environ:
 # Run the Dash app
 if __name__ == '__main__':
     # print('start')
-    app.server.run(debug=True)
+    app.server.run(debug=True, port=5001)
